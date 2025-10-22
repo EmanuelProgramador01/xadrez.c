@@ -1,80 +1,91 @@
 #include <stdio.h>
 
-int main() {
-    // =======================
-    // MOVIMENTO DA TORRE
-    // =======================
-    // A Torre se move em linha reta, horizontalmente ou verticalmente.
-    // Aqui, ela vai se mover 5 casas para a direita.
-    // Estrutura usada: for
+// ========================
+// Função recursiva da TORRE
+// ========================
+void moverTorre(int casas) {
+    if (casas == 0) return; // Caso base: parou de andar
+    printf("Direita\n");
+    moverTorre(casas - 1); // Chama novamente para mover a próxima casa
+}
 
-    printf("Movimento da Torre:\n");
-    for (int i = 1; i <= 5; i++) {
-        printf("Direita\n");
-    }
+// ========================
+// Função recursiva do BISPO
+// (usa também loops aninhados)
+// ========================
+void moverBispo(int casas) {
+    if (casas == 0) return; // Caso base: fim da recursão
 
-    // Linha em branco para separar as peças
-    printf("\n");
-
-    // =======================
-    // MOVIMENTO DO BISPO
-    // =======================
-    // O Bispo se move na diagonal.
-    // Aqui, ele vai se mover 5 casas na diagonal para cima e à direita.
-    // Estrutura usada: while
-
-    printf("Movimento do Bispo:\n");
-    int j = 1;
-    while (j <= 5) {
-        printf("Cima, Direita\n");
-        j++;
-    }
-
-    // Linha em branco para separar as peças
-    printf("\n");
-
-    // =======================
-    // MOVIMENTO DA RAINHA
-    // =======================
-    // A Rainha pode se mover em todas as direções.
-    // Aqui, ela vai se mover 8 casas para a esquerda.
-    // Estrutura usada: do-while
-
-    printf("Movimento da Rainha:\n");
-    int k = 1;
-    do {
-        printf("Esquerda\n");
-        k++;
-    } while (k <= 8);
-
-    // Linha em branco para separar as peças
-    printf("\n");
-
-    // =======================
-    // MOVIMENTO DO CAVALO
-    // =======================
-    // O Cavalo se move em "L": duas casas em uma direção e uma casa perpendicular.
-    // Aqui: duas casas para baixo e uma para a esquerda.
-    // Estruturas usadas: for (obrigatória) + while (aninhada)
-    
-    printf("Movimento do Cavalo:\n");
-    int movimentosBaixo = 2;   // duas casas para baixo
-    int movimentosEsquerda = 1; // uma casa para a esquerda
-
-    // Loop externo: controla as casas para baixo
-    for (int i = 1; i <= movimentosBaixo; i++) {
-        printf("Baixo\n");
-
-        // Loop interno: simula o movimento para a esquerda após as duas descidas
-        if (i == movimentosBaixo) { // só faz o movimento lateral no final
-            int contador = 1;
-            while (contador <= movimentosEsquerda) {
-                printf("Esquerda\n");
-                contador++;
-            }
+    // Loop aninhado: move 1 casa na diagonal (cima + direita)
+    for (int i = 0; i < 1; i++) {      // movimento vertical
+        for (int j = 0; j < 1; j++) {  // movimento horizontal
+            printf("Cima, Direita\n");
         }
     }
 
-    // Fim do programa
+    moverBispo(casas - 1); // Chama recursivamente até terminar as casas
+}
+
+// ========================
+// Função recursiva da RAINHA
+// ========================
+void moverRainha(int casas) {
+    if (casas == 0) return; // Caso base: fim da recursão
+    printf("Esquerda\n");
+    moverRainha(casas - 1);
+}
+
+// ========================
+// Função do CAVALO (loops aninhados complexos)
+// ========================
+void moverCavalo() {
+    int movimentoVertical = 2; // Duas casas para cima
+    int movimentoHorizontal = 1; // Uma casa para a direita
+
+    printf("\nMovimento do Cavalo:\n");
+
+    // Loop aninhado para simular o movimento em "L"
+    for (int i = 1; i <= movimentoVertical; i++) {
+        printf("Cima\n");
+        if (i == movimentoVertical) {
+            // Quando terminar de subir, inicia o movimento horizontal
+            for (int j = 1; j <= movimentoHorizontal; j++) {
+                printf("Direita\n");
+                // Apenas para exemplo de uso de break/continue:
+                if (j == movimentoHorizontal) break; // Encerra após mover 1 casa
+            }
+        }
+    }
+}
+
+// ========================
+// Função principal
+// ========================
+int main() {
+    printf("*** MOVIMENTOS DAS PEÇAS DE XADREZ ***\n\n");
+
+    // ---------------- Torre ----------------
+    printf("Movimento da Torre:\n");
+    moverTorre(5); // Move 5 casas para a direita
+
+    printf("\n");
+
+    // ---------------- Bispo ----------------
+    printf("Movimento do Bispo:\n");
+    moverBispo(5); // Move 5 casas na diagonal (cima + direita)
+
+    printf("\n");
+
+    // ---------------- Rainha ----------------
+    printf("Movimento da Rainha:\n");
+    moverRainha(8); // Move 8 casas para a esquerda
+
+    printf("\n");
+
+    // ---------------- Cavalo ----------------
+    moverCavalo(); // Move em L (duas para cima e uma para a direita)
+
+    printf("\n*** Fim da simulação ***\n");
+
     return 0;
 }
